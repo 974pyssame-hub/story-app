@@ -1,0 +1,13 @@
+{
+  "name": "story-hub",
+  "version": "1.0.0",
+  "description": "Une application web et mobile pour créer et lire des histoires",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "build": "echo 'Application prête à être utilisée'"
+  },
+  "keywords": ["stories", "writing", "reading", "application"],
+  "author": "StoryHub",
+  "license": "MIT"
+}
