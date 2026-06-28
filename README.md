@@ -1,181 +1,277 @@
-# StoryHub - Application de Création et Lecture d'Histoires
+# StoryHub Pro - Plateforme Collaborative d'Écriture
 
 ## 📖 Description
 
-StoryHub est une application web et mobile complète pour créer, lire et gérer vos histoires. Avec une interface élégante et intuitive, écrivez vos chef-d'œuvres et partagez-les facilement.
+StoryHub Pro est une plateforme collaborative complète pour créer, partager et découvrir des histoires. Avec un système de comptes utilisateurs multi-utilisateurs, des profils d'auteurs, des notifications en temps réel et une génération de couvertures intelligente, c'est l'outil parfait pour les écrivains.
 
-## ✨ Fonctionnalités
+## ✨ Fonctionnalités Principales
 
-### 1. Bibliothèque 📚
-- Affichage de toutes vos histoires avec titre, extrait, genre, date et temps de lecture estimé
-- Deux histoires d'exemple préchargées pour tester
-- Design responsive avec grille adaptative
+### 👥 Système Multi-Utilisateurs
+- **Inscription & Connexion** : Créez votre compte avec pseudo, email et bio
+- **Profils Auteurs** : Page de profil personnalisée avec statistiques
+- **Authentification Locale** : Les données sont sauvegardées dans le localStorage
 
-### 2. Éditeur d'Histoires ✍️
-- Champs pour titre, genre et contenu
-- Zone d'écriture en plein écran avec police élégante
-- Compteur de mots, caractères et temps de lecture en temps réel
-- Bouton de sauvegarde avec confirmation visuelle
-- Nouveau document avec un clic
+### 🏠 Accueil Personnalisé (Feed)
+- **Feed Personnalisé** : Voir les mises à jour des auteurs que vous suivez
+- **Statistiques Utilisateur** : Affichage du nombre d'histoires, followers, following
+- **Tendances** : Découvrez les histoires les plus vues
+- **Suggestions d'Auteurs** : Trouvez de nouveaux auteurs à suivre
+- **Historique des Activités** : Suivi des publications et mises à jour
 
-### 3. Lecteur de Texte 📖
-- Mise en page typographique soignée avec police Georgia
-- Barre de progression de lecture défilante
-- 3 niveaux de tailles de police ajustables (50% - 200%)
-- Interface minimaliste pour une meilleure concentration
-- Temps de lecture estimé
+### 📚 Bibliothèque Personnel
+- **Gestion d'Histoires** : Créer, éditer, lire et supprimer vos histoires
+- **Filtrage Avancé** : Recherche par titre, tri par date/longueur/titre
+- **Filtrage par Catégories** : Organisez vos histoires dans vos catégories
+- **Aperçu avec Couverture** : Chaque histoire affiche sa couverture
+- **Statistiques d'Histoires** : Mots, temps de lecture, dates de création
 
-### 4. Persistance des Données 💾
-- Sauvegarde locale complète (localStorage)
-- Les histoires persistent entre les sessions
-- Récupération automatique des données
+### ✍️ Éditeur Complet
+- **Zone d'Écriture Spacieuse** : Interface minimaliste pour la concentration
+- **Compteurs en Temps Réel** : Mots, caractères, temps de lecture
+- **Métadonnées** : Titre, description, catégorie personnalisée
+- **Sauvegarde Automatique** : Vos progrès sont toujours sauvegardés
+- **Publication** : Publiez vos histoires pour les rendre visibles à tous
 
-### 5. Recherche et Filtres 🔍
-- Recherche par titre, extrait et étiquettes
-- Filtrage par genre (Fantasy, Science-Fiction, Mystère, Romance, Aventure, Drame, Horreur, Historique)
-- Tri par date, longueur ou titre
-- Mise à jour en temps réel
+### 🎨 Générateur de Couvertures Intelligent
+- **4 Styles de Design** :
+  - Dégradé fluide
+  - Géométrique moderne
+  - Minimaliste élégant
+  - Vibrant dynamique
+- **Personnalisation des Couleurs** : Choisissez vos couleurs primaires et secondaires
+- **Régénération Rapide** : Testez plusieurs designs rapidement
+- **Upload Personnalisé** : Importez votre propre image
+- **Aperçu en Temps Réel** : Visualisez la couverture immédiatement
 
-### 6. Genres et Étiquettes 🎨
-- Palette de 8 genres prédéfinis avec couleurs distinctes
-- Système d'étiquettes personnalisables
-- Codes couleur visuels pour chaque genre
+### 📖 Lecteur de Texte Avancé
+- **Police Élégante** : Georgia ou Garamond pour une lecture confortable
+- **Ajustement de Taille** : 3 niveaux de zoom (50% - 200%)
+- **Barre de Progression** : Suivez votre avancement de lecture
+- **Favoris** : Ajoutez les histoires à vos marque-pages
+- **Informations d'Auteur** : Découvrez qui a écrit l'histoire
 
-### 7. Statistiques d'Écriture 📊
-- Objectif de mots personnalisé
-- Barre de progression vers l'objectif
-- Graphique de progression hebdomadaire (Chart.js)
-- Total des histoires, mots et temps de lecture
-- Données sauvegardées pour suivi continu
+### 🔍 Exploration & Découverte
+- **Catalogue Mondial** : Trouvez toutes les histoires publiées
+- **Filtres Sophistiqués** : Par catégorie, tendances, récentes, populaires
+- **Compteur de Vues** : Voir la popularité de chaque histoire
+- **Recherche Complète** : Trouvez exactement ce que vous cherchez
+- **Recommandations** : Découvrez des histoires similaires
 
-### 8. Mode Sombre 🌙
-- Basculement facile entre thème clair et sombre
-- Palette de couleurs adaptée pour chaque mode
-- Préférence sauvegardée
-- Support complet dans toute l'application
+### 👤 Profils Personnalisés
+- **Page de Profil** : Affichage complet de vos statistiques
+- **Photo d'Avatar** : Avatar généré automatiquement ou uploadé
+- **Bio Personnelle** : Présentez-vous aux autres auteurs
+- **Onglets Profil** :
+  - **Mes Histoires** : Toutes vos créations
+  - **Catégories** : Vos organisations personnalisées
+  - **Statistiques** : Graphiques d'écriture et progressions
 
-### 9. Export d'Histoires 💾
-- Export en TXT (texte brut)
-- Export en HTML (page web)
-- Export en PDF (mise en page optimisée)
-- Export en DOCX (Word) - Intégration future
-- Export en EPUB (e-book) - Intégration future
-- Copier le texte dans le presse-papiers
-- Modal d'export élégant avec options multiples
+### 🏷️ Système de Catégories
+- **Créer Vos Catégories** : Organisez vos histoires comme vous le souhaitez
+- **Couleurs Personnalisées** : Code couleur pour chaque catégorie
+- **Descriptions** : Documentez le but de chaque catégorie
+- **Gestion Simple** : Ajoutez, modifiez, supprimez facilement
+- **Réutilisable** : Attribuez une histoire à plusieurs catégories
 
-## 🏗️ Caractéristiques Techniques
+### 🔔 Système de Notifications
+- **Notifications en Temps Réel** : Soyez informé des activités importantes
+- **Types de Notifications** :
+  - Quelqu'un vous suit
+  - Une histoire que vous suivez est mise à jour
+  - Publications d'auteurs que vous suivez
+- **Centre de Notifications** : Accédez à votre historique complet
+- **Badge de Comptage** : Nombre de notifications non lues
+- **Marquage comme Lu** : Gérez vos notifications
 
-- **Responsive Design**: Fonctionne sur tous les appareils (desktop, tablette, mobile)
-- **Framework-less**: Pur JavaScript vanilla, HTML5 et CSS3
-- **Persistent Storage**: localStorage pour la sauvegarde sans serveur
-- **Visualisations**: Chart.js pour les graphiques
-- **Icons**: Font Awesome pour les icônes élégantes
-- **Animations**: CSS3 transitions et animations fluides
-- **PWA-ready**: Peut être converti en Progressive Web App
+### 👥 Système d'Abonnement
+- **Suivre des Auteurs** : Recevez les mises à jour de vos auteurs préférés
+- **Statistiques de Suivi** : Voyez combien de followers vous avez
+- **Feed Personnalisé** : Ne voir que le contenu que vous aimez
+- **Suggestions de Suivi** : Découvrez des auteurs similaires
+- **Gestion des Abonnements** : Suivez/Unfollowez facilement
+
+### 📊 Statistiques & Analytics
+- **Statistiques Personnelles** :
+  - Total des mots écrits
+  - Nombre d'histoires publiées/brouillons
+  - Temps de lecture total
+  - Nombre de followers/following
+- **Graphique de Progression** : Visualisez votre écriture sur 7 jours
+- **Statistiques d'Histoires** :
+  - Nombre de vues
+  - Lecteurs favoris
+  - Interactions
+
+### 💾 Système d'Export
+- **Formats Multiples** :
+  - TXT : Texte brut simple
+  - HTML : Page web formatée
+  - PDF : Document imprimable professionnel
+- **Copier dans Presse-Papiers** : Partage rapide du contenu
+- **Préservation du Formatage** : Styles et mise en page conservés
+- **Métadonnées Incluses** : Titre, auteur, description exportés
+
+### 🌙 Mode Sombre
+- **Basculement Facile** : Un clic pour changer de thème
+- **Confortable pour les Yeux** : Palettes de couleurs adaptées
+- **Préférence Sauvegardée** : Votre choix est mémorisé
+- **Couverture Complète** : Tous les éléments adaptés au thème
+
+### 📱 Design Responsive
+- **Desktop** : Vue complète avec colonnes
+- **Tablette** : Interface tactile optimisée
+- **Mobile** : Navigation fluide et lisible
+- **Adaptation Automatique** : Tous les écrans supportés
 
 ## 🚀 Démarrage Rapide
 
-### Option 1: Fichiers Locaux
-1. Téléchargez ou clonez les fichiers
+### Installation
+1. Téléchargez ou clonez le repository
 2. Ouvrez `index.html` dans votre navigateur
-3. C'est prêt! L'application fonctionne hors ligne
+3. C'est prêt ! Aucune installation requise
 
-### Option 2: Serveur Local
-```bash
-# Python 3
-python -m http.server 8000
-
-# ou Node.js
-npx http-server
-```
-
-Accédez ensuite à `http://localhost:8000`
+### Premiers Pas
+1. **Créer un Compte** : Inscrivez-vous avec pseudo et email
+2. **Compléter Votre Profil** : Ajoutez une bio et avatar
+3. **Créer une Catégorie** : Organisez votre espace
+4. **Écrire une Histoire** : Commencez votre premier brouillon
+5. **Générer une Couverture** : Créez un design unique
+6. **Publier** : Partagez avec la communauté
+7. **Explorer** : Découvrez d'autres auteurs
+8. **Suivre** : Abonnez-vous à vos auteurs préférés
 
 ## 📁 Structure des Fichiers
 
 ```
 story-app/
-├── index.html       # Structure HTML principale
-├── styles.css       # Styles et thèmes
-├── app.js           # Logique JavaScript
+├── index.html       # Structure HTML complète Pro
+├── styles.css       # Styles avancés avec profils et feed
+├── app-pro.js       # Logique JavaScript complète
 ├── package.json     # Métadonnées du projet
 └── README.md        # Cette documentation
 ```
 
-## 🎮 Guide d'Utilisation
+## 🎮 Guide d'Utilisation Détaillé
+
+### Inscription
+1. Cliquez sur l'onglet "Inscription"
+2. Entrez votre pseudo, email et mot de passe
+3. Ajoutez une bio optionnelle
+4. Cliquez "Créer un Compte"
 
 ### Créer une Histoire
-1. Cliquez sur l'onglet "Écrire"
-2. Entrez le titre et sélectionnez le genre
-3. Écrivez votre contenu dans la zone de texte
-4. Observez les statistiques en temps réel
-5. Cliquez sur "Sauvegarder"
+1. Allez à l'onglet "Écrire"
+2. Entrez le titre et sélectionnez une catégorie
+3. Écrivez votre contenu
+4. Cliquez "Générer" ou "Upload" pour la couverture
+5. Cliquez "Sauvegarder"
 
-### Lire une Histoire
-1. Dans la bibliothèque, cliquez sur le bouton "Lire" d'une histoire
-2. Utilisez les boutons +/- pour ajuster la taille de police
-3. La barre de progression suit votre lecture
-4. Cliquez sur la flèche pour retourner à la bibliothèque
+### Générer une Couverture
+1. Dans l'éditeur, cliquez "Générer"
+2. Choisissez un style (Dégradé, Géométrique, Minimaliste, Vibrant)
+3. Sélectionnez vos couleurs
+4. Cliquez "Régénérer" pour d'autres options
+5. Cliquez "Utiliser cette Couverture"
 
-### Exporter une Histoire
-1. Ouvrez une histoire en édition
-2. Cliquez sur "Exporter"
-3. Choisissez le format (TXT, HTML, PDF)
-4. Le fichier est téléchargé automatiquement
+### Publier une Histoire
+1. Ouvrez l'histoire en édition
+2. Cliquez "Publier"
+3. Confirmez pour rendre visible à tous
 
-### Gérer les Statistiques
-1. Allez à l'onglet "Statistiques"
-2. Définissez votre objectif de mots
-3. Visualisez votre progression
-4. Consultez le graphique hebdomadaire
+### Découvrir des Histoires
+1. Allez à "Explorer"
+2. Utilisez les filtres (catégorie, tri)
+3. Recherchez des mots-clés
+4. Cliquez "Lire" pour ouvrir une histoire
 
-## 🎨 Personnalisation
+### Suivre un Auteur
+1. Voyez une histoire publiée
+2. Cliquez "Suivre" sur la carte
+3. Recevez les mises à jour dans votre feed
 
-### Couleurs
-Modifiez les variables CSS au début de `styles.css`:
+### Consulter Votre Profil
+1. Cliquez "Profil"
+2. Voyez vos statistiques complètes
+3. Éditez votre bio
+4. Consultez vos histoires et catégories
+
+## 🎨 Personnalisation Avancée
+
+### Modifier les Couleurs Principales
+Dans `styles.css`, modifiez les variables CSS :
 ```css
 :root {
   --primary: #6366f1;
   --secondary: #ec4899;
+  --success: #10b981;
   /* ... */
 }
 ```
 
-### Genres
-Ajoutez de nouveaux genres dans `index.html` et `app.js`
+### Ajouter de Nouveaux Styles de Couverture
+Dans `app-pro.js`, fonction `regenerateCover()`, ajoutez un cas switch
 
-### Stockage
-Les données sont sauvegardées dans `localStorage` sous les clés:
-- `stories`: Liste de toutes les histoires
-- `wordGoal`: Objectif de mots
-- `fontSize`: Taille de police du lecteur
-- `darkMode`: Préférence du thème
+### Créer de Nouvelles Catégories Prédéfinies
+Dans `loadSampleData()`, ajoutez des catégories initiales
 
-## 📱 Responsive
+## 🔐 Sécurité & Confidentialité
 
-- **Desktop**: Grille complète, disposition en colonnes
-- **Tablette**: Grille adaptée, interface tactile
-- **Mobile**: Vue simple et empilée, touches larges
+- **Stockage Local** : Aucun serveur externe requis
+- **Aucune Transmission** : Les données ne quittent jamais votre navigateur
+- **Confidentialité Totale** : Aucun tracking ou collecte de données
+- **Sauvegarde Sécurisée** : Stockage localStorage protégé
 
-## 🔐 Sécurité et Confidentialité
+## 💾 Stockage des Données
 
-- Aucun serveur, pas de connexion internet requise
-- Toutes les données restent sur votre appareil
-- Pas de suivi ou de collecte de données
-- Sauvegarde locale sécurisée
+Les données sont sauvegardées dans le localStorage du navigateur :
+- `storyAppUsers` : Tous les utilisateurs
+- `storyAppStories` : Toutes les histoires
+- `storyAppCategories` : Toutes les catégories
+- `storyAppNotifications` : Historique des notifications
+- `storyAppBookmarks` : Vos histoires favorites
+- `currentUser` : Utilisateur connecté
 
-## 🚀 Développement Futur
+## 🚀 Roadmap Futur
 
-- [ ] Synchronisation cloud
+- [ ] Synchronisation cloud (Firebase/Supabase)
 - [ ] Collaboration en temps réel
-- [ ] Commentaires et annotations
-- [ ] Support du markdown avancé
-- [ ] Thèmes personnalisés
-- [ ] API d'export DOCX et EPUB natif
-- [ ] Partage de histoires
-- [ ] Système de notation et critiques
-- [ ] Notifications
-- [ ] Support hors ligne PWA
+- [ ] Système de commentaires et critiques
+- [ ] Support Markdown avancé
+- [ ] Thèmes personnalisables
+- [ ] API REST complète
+- [ ] Partage social (Twitter, Facebook)
+- [ ] Système de notation ⭐
+- [ ] Chat entre auteurs
+- [ ] Système de récompenses/badges
+- [ ] Export natif DOCX et EPUB
+- [ ] PWA (Installation sur écran d'accueil)
+- [ ] Traduction multilingue
+- [ ] Stockage cloud pour les images
+
+## 📊 Statistiques Disponibles
+
+**Par Utilisateur:**
+- Nombre total d'histoires
+- Mots écrits
+- Temps de lecture total
+- Nombre de followers/following
+- Histoires publiées vs brouillons
+
+**Par Histoire:**
+- Mots et caractères
+- Temps de lecture estimé
+- Nombre de vues
+- Date de création/modification
+- Statut (brouillon/publié)
+
+## 🎯 Cas d'Utilisation
+
+- ✍️ **Écrivains** : Écrire et publier des histoires
+- 📚 **Lecteurs** : Découvrir et lire des histoires
+- 👥 **Communautés** : Se connecter avec d'autres passionnés
+- 🎓 **Étudiants** : Travailler sur des projets créatifs
+- 💼 **Professionnels** : Partager son portfolio
+- 🎨 **Créatifs** : Expérimenter avec les couvertures
 
 ## 📄 Licence
 
@@ -183,8 +279,14 @@ MIT License - Libre d'utilisation et de modification
 
 ## 🤝 Support
 
-Pour toute question ou suggestion, n'hésitez pas à nous contacter!
+Pour toute question ou suggestion, n'hésitez pas à nous contacter !
+
+## 🎉 Merci d'utiliser StoryHub Pro!
+
+Bonne écriture et bonne lecture! ✍️📖
 
 ---
 
-**Bonne écriture! ✍️**
+**Version:** 2.0 Pro  
+**Dernière mise à jour:** 2026-06-28  
+**Support:** Multilingue (FR/EN prochainement)
