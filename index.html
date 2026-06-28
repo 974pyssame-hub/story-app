@@ -3,219 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StoryHub - Créez et Lisez des Histoires</title>
+    <title>StoryHub Pro - Plateforme Collaborative d'Écriture</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div id="app" class="app">
-        <!-- Navigation -->
-        <nav class="navbar">
-            <div class="navbar-container">
-                <div class="navbar-brand">
-                    <i class="fas fa-book-open"></i>
-                    <span>StoryHub</span>
-                </div>
-                <div class="navbar-menu">
-                    <button class="nav-btn active" data-view="library">
-                        <i class="fas fa-library"></i>
-                        <span>Bibliothèque</span>
-                    </button>
-                    <button class="nav-btn" data-view="writer">
-                        <i class="fas fa-pen-fancy"></i>
-                        <span>Écrire</span>
-                    </button>
-                    <button class="nav-btn" data-view="stats">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Statistiques</span>
-                    </button>
-                </div>
-                <div class="navbar-controls">
-                    <button id="themeToggle" class="btn-icon" title="Thème">
-                        <i class="fas fa-moon"></i>
-                    </button>
+        <!-- Auth Modal -->
+        <div id="authModal" class="modal active">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <div class="auth-header">
+                        <i class="fas fa-book-open"></i>
+                        <h1>StoryHub Pro</h1>
+                    </div>
+                    
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Connexion</button>
+                        <button class="auth-tab" data-tab="register">Inscription</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" class="auth-form active">
+                        <div class="form-group">
+                            <label>Pseudo ou Email</label>
+                            <input type="text" id="loginEmail" placeholder="votre-pseudo@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mot de passe</label>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Se Connecter</button>
+                        <p class="auth-info">Les données sont sauvegardées localement</p>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-group">
+                            <label>Pseudo</label>
+                            <input type="text" id="registerUsername" placeholder="votre-pseudo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="registerEmail" placeholder="votre@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mot de passe</label>
+                            <input type="password" id="registerPassword" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea id="registerBio" placeholder="Dites-nous qui vous êtes..." rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer un Compte</button>
+                    </form>
                 </div>
             </div>
-        </nav>
+        </div>
 
-        <!-- Bibliothèque -->
-        <section id="library" class="view active">
-            <div class="view-container">
-                <div class="library-header">
-                    <h1>Ma Bibliothèque</h1>
-                    <div class="search-filters">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="searchInput" placeholder="Rechercher une histoire...">
+        <!-- Main App (Hidden until login) -->
+        <div id="mainApp" class="main-app" style="display: none;">
+            <!-- Navigation -->
+            <nav class="navbar">
+                <div class="navbar-container">
+                    <div class="navbar-brand">
+                        <i class="fas fa-book-open"></i>
+                        <span>StoryHub Pro</span>
+                    </div>
+                    <div class="navbar-menu">
+                        <button class="nav-btn active" data-view="feed">
+                            <i class="fas fa-home"></i>
+                            <span>Accueil</span>
+                        </button>
+                        <button class="nav-btn" data-view="library">
+                            <i class="fas fa-library"></i>
+                            <span>Bibliothèque</span>
+                        </button>
+                        <button class="nav-btn" data-view="writer">
+                            <i class="fas fa-pen-fancy"></i>
+                            <span>Écrire</span>
+                        </button>
+                        <button class="nav-btn" data-view="explore">
+                            <i class="fas fa-compass"></i>
+                            <span>Explorer</span>
+                        </button>
+                        <button class="nav-btn" data-view="profile">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Profil</span>
+                        </button>
+                    </div>
+                    <div class="navbar-controls">
+                        <div class="notification-bell">
+                            <button id="notifBell" class="btn-icon">
+                                <i class="fas fa-bell"></i>
+                                <span id="notifCount" class="notif-badge" style="display: none;">0</span>
+                            </button>
+                            <div id="notifDropdown" class="notif-dropdown" style="display: none;">
+                                <div class="notif-header">
+                                    <h3>Notifications</h3>
+                                    <button id="clearNotifs" class="btn-small">Effacer</button>
+                                </div>
+                                <div id="notifList" class="notif-list"></div>
+                            </div>
                         </div>
-                        <div class="filter-group">
-                            <select id="genreFilter" class="filter-select">
-                                <option value="">Tous les genres</option>
-                                <option value="Fantasy">Fantasy</option>
-                                <option value="Science-Fiction">Science-Fiction</option>
-                                <option value="Mystère">Mystère</option>
-                                <option value="Romance">Romance</option>
-                                <option value="Aventure">Aventure</option>
-                                <option value="Drame">Drame</option>
-                                <option value="Horreur">Horreur</option>
-                                <option value="Historique">Historique</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <select id="sortBy" class="filter-select">
-                                <option value="date-desc">Plus récentes</option>
-                                <option value="date-asc">Plus anciennes</option>
-                                <option value="length-desc">Plus longues</option>
-                                <option value="length-asc">Plus courtes</option>
-                                <option value="title-asc">Titre (A-Z)</option>
-                            </select>
-                        </div>
+                        <button id="themeToggle" class="btn-icon" title="Thème">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button id="logoutBtn" class="btn btn-secondary btn-small">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Déconnexion
+                        </button>
                     </div>
                 </div>
+            </nav>
 
-                <div id="storiesGrid" class="stories-grid">
-                    <!-- Les histoires seront affichées ici -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Éditeur -->
-        <section id="writer" class="view">
-            <div class="view-container">
-                <div class="editor-container">
-                    <div class="editor-sidebar">
-                        <div class="editor-meta">
-                            <div class="form-group">
-                                <label for="storyTitle">Titre</label>
-                                <input type="text" id="storyTitle" placeholder="Titre de votre histoire">
+            <!-- Feed View -->
+            <section id="feed" class="view active">
+                <div class="view-container">
+                    <div class="feed-grid">
+                        <!-- Sidebar Left -->
+                        <aside class="feed-sidebar-left">
+                            <div class="feed-card user-card">
+                                <img id="feedAvatar" class="avatar-lg" src="" alt="Avatar">
+                                <h3 id="feedUsername"></h3>
+                                <p id="feedBio" class="text-secondary"></p>
+                                <div class="user-stats">
+                                    <div class="stat">
+                                        <span class="stat-value" id="feedStories">0</span>
+                                        <span class="stat-label">Histoires</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value" id="feedFollowers">0</span>
+                                        <span class="stat-label">Abonnés</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value" id="feedFollowing">0</span>
+                                        <span class="stat-label">Suivis</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="storyGenre">Genre</label>
-                                <select id="storyGenre">
-                                    <option value="">Choisir un genre</option>
-                                    <option value="Fantasy">Fantasy</option>
-                                    <option value="Science-Fiction">Science-Fiction</option>
-                                    <option value="Mystère">Mystère</option>
-                                    <option value="Romance">Romance</option>
-                                    <option value="Aventure">Aventure</option>
-                                    <option value="Drame">Drame</option>
-                                    <option value="Horreur">Horreur</option>
-                                    <option value="Historique">Historique</option>
+
+                            <div class="feed-card">
+                                <h4>Mes Catégories</h4>
+                                <div id="myCategories" class="categories-list"></div>
+                                <button id="addCategoryBtn" class="btn btn-secondary btn-small" style="width: 100%; margin-top: 1rem;">
+                                    <i class="fas fa-plus"></i> Nouvelle Catégorie
+                                </button>
+                            </div>
+
+                            <div class="feed-card">
+                                <h4>Auteurs Suivis</h4>
+                                <div id="followedAuthors" class="authors-list"></div>
+                            </div>
+                        </aside>
+
+                        <!-- Main Feed -->
+                        <main class="feed-main">
+                            <div class="feed-card">
+                                <div class="quick-write">
+                                    <img id="quickAvatar" class="avatar-sm" src="" alt="Avatar">
+                                    <input type="text" id="quickWrite" placeholder="Commencer une nouvelle histoire..." class="quick-input">
+                                    <button id="quickWriteBtn" class="btn btn-primary btn-small">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="feedContent" class="feed-posts">
+                                <!-- Les mises à jour des histoires apparaîtront ici -->
+                            </div>
+                        </main>
+
+                        <!-- Sidebar Right -->
+                        <aside class="feed-sidebar-right">
+                            <div class="feed-card">
+                                <h4>Tendances</h4>
+                                <div id="trendingStories" class="trending-list"></div>
+                            </div>
+
+                            <div class="feed-card">
+                                <h4>Suggestions d'Auteurs</h4>
+                                <div id="suggestedAuthors" class="authors-suggestions"></div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Library View -->
+            <section id="library" class="view">
+                <div class="view-container">
+                    <div class="library-header">
+                        <h1>Ma Bibliothèque</h1>
+                        <div class="search-filters">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchInput" placeholder="Rechercher une histoire...">
+                            </div>
+                            <div class="filter-group">
+                                <select id="categoryFilter" class="filter-select">
+                                    <option value="">Toutes les catégories</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Étiquettes</label>
-                                <div id="tagsContainer" class="tags-container"></div>
-                            </div>
-                            <div class="stats-mini">
-                                <div class="stat-item">
-                                    <span class="stat-label">Mots</span>
-                                    <span id="wordCount" class="stat-value">0</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Caractères</span>
-                                    <span id="charCount" class="stat-value">0</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Lecture</span>
-                                    <span id="readTime" class="stat-value">0 min</span>
-                                </div>
-                            </div>
-                            <div class="editor-actions">
-                                <button id="saveStory" class="btn btn-primary">
-                                    <i class="fas fa-save"></i>
-                                    Sauvegarder
-                                </button>
-                                <button id="exportStory" class="btn btn-secondary" style="display:none;">
-                                    <i class="fas fa-download"></i>
-                                    Exporter
-                                </button>
-                                <button id="newStory" class="btn btn-secondary">
-                                    <i class="fas fa-file-alt"></i>
-                                    Nouveau
-                                </button>
+                            <div class="filter-group">
+                                <select id="sortBy" class="filter-select">
+                                    <option value="date-desc">Plus récentes</option>
+                                    <option value="date-asc">Plus anciennes</option>
+                                    <option value="length-desc">Plus longues</option>
+                                    <option value="length-asc">Plus courtes</option>
+                                    <option value="title-asc">Titre (A-Z)</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="editor-main">
-                        <textarea id="storyContent" class="story-textarea" placeholder="Commencez à écrire votre histoire..."></textarea>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Lecteur -->
-        <section id="reader" class="view">
-            <div class="reader-container">
-                <div class="reader-toolbar">
-                    <button id="closeReader" class="btn-icon">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <h2 id="readerTitle"></h2>
-                    <div class="reader-controls">
-                        <div class="font-size-control">
-                            <button id="fontSmall" class="btn-icon" title="Réduire">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span id="fontSizeDisplay">100%</span>
-                            <button id="fontLarge" class="btn-icon" title="Augmenter">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
+                    <div id="storiesGrid" class="stories-grid">
+                        <!-- Les histoires seront affichées ici -->
                     </div>
                 </div>
-                <div class="reader-progress">
-                    <div id="readingProgress" class="progress-bar"></div>
-                </div>
-                <div id="readerContent" class="reader-content">
-                    <!-- Le contenu de l'histoire sera affiché ici -->
-                </div>
-                <div class="reader-info">
-                    <span id="readingTime">Temps de lecture estimé: 0 min</span>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Statistiques -->
-        <section id="stats" class="view">
-            <div class="view-container">
-                <h1>Mes Statistiques d'Écriture</h1>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Objectif de Mots</h3>
-                        <div class="stat-form">
-                            <input type="number" id="wordGoal" placeholder="Entrez votre objectif">
-                            <button id="setGoal" class="btn btn-small">Définir</button>
-                        </div>
-                        <div id="goalProgress" class="progress-container">
-                            <div class="progress-bar">
-                                <div id="goalBar" class="progress-fill"></div>
+            <!-- Writer View -->
+            <section id="writer" class="view">
+                <div class="view-container">
+                    <div class="editor-container">
+                        <div class="editor-sidebar">
+                            <div class="editor-meta">
+                                <div class="form-group">
+                                    <label for="storyTitle">Titre</label>
+                                    <input type="text" id="storyTitle" placeholder="Titre de votre histoire">
+                                </div>
+                                <div class="form-group">
+                                    <label for="storyCategory">Catégorie</label>
+                                    <select id="storyCategory">
+                                        <option value="">Choisir une catégorie</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="storyDescription">Description</label>
+                                    <textarea id="storyDescription" placeholder="Décrivez votre histoire..." rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Couverture</label>
+                                    <div class="cover-section">
+                                        <img id="storycover" class="cover-preview" src="https://via.placeholder.com/150x225?text=Couverture" alt="Couverture">
+                                        <div class="cover-buttons">
+                                            <button id="uploadCoverBtn" class="btn btn-secondary btn-small">
+                                                <i class="fas fa-upload"></i> Upload
+                                            </button>
+                                            <button id="generateCoverBtn" class="btn btn-secondary btn-small">
+                                                <i class="fas fa-wand-magic-sparkles"></i> Générer
+                                            </button>
+                                        </div>
+                                        <input type="file" id="coverInput" accept="image/*" style="display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="stats-mini">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Mots</span>
+                                        <span id="wordCount" class="stat-value">0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Caractères</span>
+                                        <span id="charCount" class="stat-value">0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Lecture</span>
+                                        <span id="readTime" class="stat-value">0 min</span>
+                                    </div>
+                                </div>
+
+                                <div class="editor-actions">
+                                    <button id="saveStory" class="btn btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        Sauvegarder
+                                    </button>
+                                    <button id="exportStory" class="btn btn-secondary" style="display:none;">
+                                        <i class="fas fa-download"></i>
+                                        Exporter
+                                    </button>
+                                    <button id="publishStory" class="btn btn-secondary" style="display:none;">
+                                        <i class="fas fa-share"></i>
+                                        Publier
+                                    </button>
+                                    <button id="newStory" class="btn btn-secondary">
+                                        <i class="fas fa-file-alt"></i>
+                                        Nouveau
+                                    </button>
+                                </div>
                             </div>
-                            <span id="goalText">0 / 0 mots</span>
+                        </div>
+                        <div class="editor-main">
+                            <textarea id="storyContent" class="story-textarea" placeholder="Commencez à écrire votre histoire..."></textarea>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <h3>Total des Histoires</h3>
-                        <p id="totalStories" class="stat-big">0</p>
+                </div>
+            </section>
+
+            <!-- Reader View -->
+            <section id="reader" class="view">
+                <div class="reader-container">
+                    <div class="reader-toolbar">
+                        <button id="closeReader" class="btn-icon">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="reader-title-section">
+                            <h2 id="readerTitle"></h2>
+                            <p id="readerAuthor" class="text-secondary"></p>
+                        </div>
+                        <div class="reader-controls">
+                            <button id="toggleBookmark" class="btn-icon" title="Ajouter aux favoris">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                            <div class="font-size-control">
+                                <button id="fontSmall" class="btn-icon" title="Réduire">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span id="fontSizeDisplay">100%</span>
+                                <button id="fontLarge" class="btn-icon" title="Augmenter">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <h3>Total des Mots</h3>
-                        <p id="totalWords" class="stat-big">0</p>
+                    <div class="reader-progress">
+                        <div id="readingProgress" class="progress-bar"></div>
                     </div>
-                    <div class="stat-card">
-                        <h3>Temps de Lecture Total</h3>
-                        <p id="totalReadTime" class="stat-big">0 h</p>
+                    <div id="readerContent" class="reader-content"></div>
+                    <div class="reader-info">
+                        <span id="readingTime">Temps de lecture estimé: 0 min</span>
                     </div>
                 </div>
-                <div class="chart-container">
-                    <h2>Progression Hebdomadaire</h2>
-                    <canvas id="progressChart"></canvas>
+            </section>
+
+            <!-- Explore View -->
+            <section id="explore" class="view">
+                <div class="view-container">
+                    <div class="explore-header">
+                        <h1>Découvrir des Histoires</h1>
+                        <div class="explore-filters">
+                            <input type="text" id="exploreSearch" placeholder="Rechercher...">
+                            <select id="exploreCategoryFilter">
+                                <option value="">Toutes les catégories</option>
+                            </select>
+                            <select id="exploreSortBy">
+                                <option value="trending">Tendances</option>
+                                <option value="recent">Récentes</option>
+                                <option value="popular">Populaires</option>
+                                <option value="top-rated">Mieux notées</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="exploreGrid" class="stories-grid"></div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- Profile View -->
+            <section id="profile" class="view">
+                <div class="view-container">
+                    <div class="profile-header">
+                        <img id="profileAvatar" class="avatar-xl" src="" alt="Avatar">
+                        <div class="profile-info">
+                            <h1 id="profileName"></h1>
+                            <p id="profileBio" class="text-secondary"></p>
+                            <div class="profile-stats">
+                                <div class="stat">
+                                    <span class="stat-value" id="profileStories">0</span>
+                                    <span class="stat-label">Histoires</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value" id="profileFollowers">0</span>
+                                    <span class="stat-label">Abonnés</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value" id="profileFollowing">0</span>
+                                    <span class="stat-label">Suivis</span>
+                                </div>
+                            </div>
+                            <button id="editProfileBtn" class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Éditer le Profil
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="profile-content">
+                        <div class="profile-tabs">
+                            <button class="profile-tab active" data-tab="stories">Mes Histoires</button>
+                            <button class="profile-tab" data-tab="categories">Catégories</button>
+                            <button class="profile-tab" data-tab="stats">Statistiques</button>
+                        </div>
+
+                        <div id="storiesTab" class="profile-tab-content active">
+                            <div id="profileStoriesGrid" class="stories-grid"></div>
+                        </div>
+
+                        <div id="categoriesTab" class="profile-tab-content">
+                            <div id="profileCategories" class="categories-grid"></div>
+                        </div>
+
+                        <div id="statsTab" class="profile-tab-content">
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <h3>Total des Mots</h3>
+                                    <p id="totalWordsProfile" class="stat-big">0</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Temps de Lecture Total</h3>
+                                    <p id="totalReadTimeProfile" class="stat-big">0 h</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Histoires Publiées</h3>
+                                    <p id="publishedStoriesProfile" class="stat-big">0</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>En Brouillon</h3>
+                                    <p id="draftStoriesProfile" class="stat-big">0</p>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <h2>Progression d'Écriture</h2>
+                                <canvas id="progressChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 
-    <!-- Modal Exporter -->
+    <!-- Modals -->
+    <!-- Cover Generator Modal -->
+    <div id="coverGeneratorModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Générer une Couverture</h2>
+                <button class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="cover-generator">
+                    <div class="cover-preview-lg">
+                        <div id="generatedCover" class="generated-cover">
+                            <div class="cover-overlay"></div>
+                            <h2 id="coverTitle" class="cover-title"></h2>
+                        </div>
+                    </div>
+                    <div class="cover-options">
+                        <div class="form-group">
+                            <label>Style</label>
+                            <select id="coverStyle">
+                                <option value="gradient">Dégradé</option>
+                                <option value="geometric">Géométrique</option>
+                                <option value="minimal">Minimaliste</option>
+                                <option value="vibrant">Vibrant</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Couleur Primaire</label>
+                            <input type="color" id="coverColorPrimary" value="#6366f1">
+                        </div>
+                        <div class="form-group">
+                            <label>Couleur Secondaire</label>
+                            <input type="color" id="coverColorSecondary" value="#ec4899">
+                        </div>
+                        <button id="regenerateCoverBtn" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Régénérer
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="useCoverBtn" class="btn btn-primary">Utiliser cette Couverture</button>
+                    <button id="closeCoverBtn" class="btn btn-secondary">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nouvelle Catégorie</h2>
+                <button class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nom de la catégorie</label>
+                    <input type="text" id="categoryName" placeholder="Ex: Fantasy épique">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="categoryDescription" placeholder="Description..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Couleur</label>
+                    <input type="color" id="categoryColor" value="#6366f1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="createCategoryBtn" class="btn btn-primary">Créer</button>
+                <button id="closeCategoryBtn" class="btn btn-secondary">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Éditer le Profil</h2>
+                <button class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Photo de Profil</label>
+                    <input type="file" id="avatarInput" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Bio</label>
+                    <textarea id="editBio" placeholder="Parlez de vous..." rows="4"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveProfileBtn" class="btn btn-primary">Sauvegarder</button>
+                <button id="closeProfileEditBtn" class="btn btn-secondary">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
     <div id="exportModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -228,17 +544,9 @@
                         <i class="fas fa-file-alt"></i>
                         <span>TXT</span>
                     </button>
-                    <button class="export-btn" data-format="docx">
-                        <i class="fas fa-file-word"></i>
-                        <span>DOCX</span>
-                    </button>
                     <button class="export-btn" data-format="pdf">
                         <i class="fas fa-file-pdf"></i>
                         <span>PDF</span>
-                    </button>
-                    <button class="export-btn" data-format="epub">
-                        <i class="fas fa-book"></i>
-                        <span>EPUB</span>
                     </button>
                     <button class="export-btn" data-format="html">
                         <i class="fas fa-code"></i>
@@ -260,6 +568,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="app.js"></script>
+    <script src="app-pro.js"></script>
 </body>
 </html>
